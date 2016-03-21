@@ -1,0 +1,20 @@
+{
+  "AccountName": "",
+  "AccountPassword": "",
+  "BeepInvites": false,
+  "BeepName": false,
+  "BeepSay": false,
+  "BeepWhisper": false,
+  "BeepYell": false,
+  "IrcChannel": "",
+  "IrcNick": "",
+  "LogChat": false,
+  "LogInvites": false,
+  "PathToWoW": "H:\\World of Warcraft Classic NEW\\WoW.exe",
+  "LoadedPlugins": [],
+  "RealmList": "set realmlist login.nostalrius.org",
+  "UseIrc": false,
+  "ZzukAccount": "",
+  "ZzukPassword": "",
+  "ZzukSavePassword": false
+}
