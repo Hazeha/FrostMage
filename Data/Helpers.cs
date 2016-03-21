@@ -6,7 +6,7 @@ namespace CustomClassTemplate.Data
     {
         public static void PrintToChat(string parMessage)
         {
-            Lua.Instance.Execute("DEFAULT_CHAT_FRAME:AddMessage('EmuPriest: " + parMessage + "')");
+            Lua.Instance.Execute("DEFAULT_CHAT_FRAME:AddMessage('XhzMage: " + parMessage + "')");
         }
 
         public static void TryCast(string parSpell, int parWait = 10)

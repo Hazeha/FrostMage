@@ -168,7 +168,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(425, 83);
+            this.label2.Location = new System.Drawing.Point(431, 83);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 12;
@@ -178,7 +178,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(450, 58);
+            this.label3.Location = new System.Drawing.Point(456, 59);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(33, 13);
             this.label3.TabIndex = 11;
@@ -309,7 +309,6 @@
             // 
             // scSpirit
             // 
-            this.scSpirit.Enabled = false;
             this.scSpirit.FormattingEnabled = true;
             this.scSpirit.Items.AddRange(new object[] {
             "Scroll of Spirit",
@@ -324,7 +323,6 @@
             // 
             // scProt
             // 
-            this.scProt.Enabled = false;
             this.scProt.FormattingEnabled = true;
             this.scProt.Items.AddRange(new object[] {
             "Scroll of Protection",

@@ -10,6 +10,7 @@ using ZzukBot.ExtensionFramework.Classes;
 using ZzukBot.Game.Statics;
 using ZzukBot.Mem;
 using ZzukBot.Objects;
+using ZzukBot.Helpers.PPather;
 
 // CC By Bokutox with the major help of XHZ
 // Thanks to Z0mg for the Template
@@ -87,12 +88,16 @@ namespace CustomClassTemplate
 
             }
         }
-
+        
+        
         /// <summary>
         /// Should be called when the botbase is fighting an unit
         /// </summary>
         public override void OnFight()
         {
+
+           
+
             
             try
             {
@@ -103,19 +108,25 @@ namespace CustomClassTemplate
 
                 foreach (var spell in damageSpells)
                 {
+                    
 
-                    if (ObjectManager.Instance.Player.HealthPercent <= 20)
+                    if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.HealthPot) > 0)
                     {
-                        ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.HealthPot)
-                               .Use();
-                    }                   
-                     
-                    if (ObjectManager.Instance.Player.ManaPercent <= 20)
+                        if (ObjectManager.Instance.Player.HealthPercent <= 20)
+                        {
+                            ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.HealthPot)
+                                   .Use();
+                        }
+                    }
+                    if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.ManaPot) > 0)
                     {
-                        ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.ManaPot)
-                                  .Use();
-                        ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.ManaGem)
-                                  .Use();
+                        if (ObjectManager.Instance.Player.ManaPercent <= 20)
+                        {
+                            ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.ManaPot)
+                                      .Use();
+                            ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.ManaGem)
+                                      .Use();
+                        }
                     }
 
                     if (spell.IsWanted)
@@ -131,25 +142,7 @@ namespace CustomClassTemplate
                 
             }
         }
-
-      
-       
-
-
-        // -- CHECK THIS SHIT...
-
-        public sealed class Mage
-        {
-
-            public int StackCount { get; private set; }
-
-        }
- 
-        // CHECK THIS SHIT
-
-
-
-
+        
         public override void OnRest()
         {
             
@@ -158,36 +151,94 @@ namespace CustomClassTemplate
             {
                 try
                 {
-
-                    if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.FoodName) <= 6)
+                   /* if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.ElixirUse) > 0)
                     {
-                        if (CanCast("Conjure Food"))
+                        if (!ObjectManager.Instance.Player.GotAura(CustomClassSettings.Values.ElixirUse))
                         {
-                            TryCast("Conjure Food");
+                            ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.ElixirUse).Use();
+                            ZzukBot.Helpers.Wait.For("", 500);
+                        }
+                    } */
 
+                    if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.StamScroll) > 0)
+                    {
+                        if (!ObjectManager.Instance.Player.GotAura("Stamina"))
+                        {
+                            ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.StamScroll).Use();
+                            ZzukBot.Helpers.Wait.For("Stamina", 500);
+                        }
+                    }
+
+                    if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.SpiritScroll) > 0)
+                    {
+                        if (!ObjectManager.Instance.Player.GotAura("Spirit"))
+                        {
+                            ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.SpiritScroll).Use();
+                            ZzukBot.Helpers.Wait.For("Spirit", 500);
+                        }
+                    }
+
+                    if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.ProtScroll) > 0)
+                    {
+                        if (!ObjectManager.Instance.Player.GotAura("Armor"))
+                        {
+                            ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.ProtScroll).Use();
+                            ZzukBot.Helpers.Wait.For("Armor", 500);
+                        }
+                    }
+
+                    if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.WeaponEnch) > 0)
+                    {
+                        if (!ObjectManager.Instance.Player.IsMainhandEnchanted())
+                        {
+                            ObjectManager.Instance.Player.EnchantMainhandItem(CustomClassSettings.Values.WeaponEnch);
+                            ZzukBot.Helpers.Wait.For("", 500);
+                        }
+                    }
+
+                    if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.FoodName) < 6 && 
+                        !ObjectManager.Instance.Player.IsEating)
+                    {                        
+                        for (int i = 0; i < 3;)
+                        {
+                            if (CanCast("Conjure Food") && !ObjectManager.Instance.Player.IsEating)
+                            {
+                                TryCast("Conjure Food");
+                                ZzukBot.Helpers.Wait.For("Conjure Food", 2500);
+                                i++;
+                            }
                         }
 
                     }
-                    else if (!ObjectManager.Instance.Player.IsEating)
+
+                     if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.DrinkName) < 6 && 
+                    !ObjectManager.Instance.Player.IsEating)
+                    {
+                        
+                        for (int i = 0; i < 3;)
+                        {                            
+                            if (CanCast("Conjure Water") && !ObjectManager.Instance.Player.IsEating)
+                            {                            
+                                TryCast("Conjure Water");
+                                ZzukBot.Helpers.Wait.For("Conjure Water", 2500);
+                                i++;
+                            }                            
+                        }
+                    }
+
+                    if (!ObjectManager.Instance.Player.IsEating)
                     {
                         ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.FoodName)
                             .Use();
-                        ZzukBot.Helpers.Wait.For("EatMage", 500);
+                        ZzukBot.Helpers.Wait.For("EatMage", 1500);
                     }
 
-                    if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.DrinkName) <= 6)
-                    {
-                        if (CanCast("Conjure Water"))
-                        {
-                            TryCast("Conjure Water");
-                        }
-
-                    }
-                    else if (!ObjectManager.Instance.Player.IsDrinking)
+                   
+                    if (!ObjectManager.Instance.Player.IsDrinking)
                     {
                             ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.DrinkName)
                                 .Use();
-                            ZzukBot.Helpers.Wait.For("DrinkMage", 500);
+                            ZzukBot.Helpers.Wait.For("DrinkMage", 1500);
                     }
 
                     
@@ -211,72 +262,15 @@ namespace CustomClassTemplate
         {
             try
             {
-                if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.FoodName) < 6)
-            {
-                if (CanCast("Conjure Food"))
-                {
-                    TryCast("Conjure Food");
-
-                }
-
-            }
-            else if (Inventory.Instance.GetItemCount(CustomClassSettings.Values.DrinkName) < 6)
-            {
-                if (CanCast("Conjure Water"))
-                {
-                    TryCast("Conjure Water");
-
-                }
-
-            }
-            else if (!ObjectManager.Instance.Player.GotAura(CustomClassSettings.Values.ElixirUse))
-            {
-                ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.ElixirUse).Use();
-
-            }
-
-
-            else if (!ObjectManager.Instance.Player.GotAura(CustomClassSettings.Values.StamScroll))
-            {
-                ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.StamScroll).Use();
-
-            }
-
-
-            else if (!ObjectManager.Instance.Player.GotAura(CustomClassSettings.Values.SpiritScroll))
-            {
-                ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.SpiritScroll).Use();
-
-            }
-
-
-            else if (!ObjectManager.Instance.Player.GotAura(CustomClassSettings.Values.ProtScroll))
-            {
-                ObjectManager.Instance.Items.FirstOrDefault(i => i.Name == CustomClassSettings.Values.ProtScroll).Use();
-
-            }
-
-
-            else if (!ObjectManager.Instance.Player.IsMainhandEnchanted())
-            {
-                ObjectManager.Instance.Player.EnchantMainhandItem(CustomClassSettings.Values.WeaponEnch);
-
-            }
-            
-                         
-                                       
                 var buffs = this.spellbook.GetBuffSpells();
 
                 foreach (var spell in buffs)
-                {                    
-                   
+                {
                     if (spell.IsWanted)
                     {
                         spell.Cast();
                         return false;
                     }
-
-
                 }
             }
             catch (Exception e)
@@ -300,7 +294,7 @@ namespace CustomClassTemplate
         /// <summary>
         /// The name of the CC
         /// </summary>
-        public override string Name => "BokutoxFrostMageV2";
+        public override string Name => "TestMageV-9000+";
 
         /// <summary>
         /// The author of the CC
@@ -310,7 +304,7 @@ namespace CustomClassTemplate
         /// <summary>
         /// The version of the CC
         /// </summary>
-        public override int Version => 2;
+        public override int Version => 9001;
 
         /// <summary>
         /// The current combat distance

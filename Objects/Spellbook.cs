@@ -21,7 +21,7 @@ namespace CustomClassTemplate.Objects
         //-------------------------------------------------------------------------------------------------------
         // Survival Spells - Not buff but doesn't do damage            Prio - Buff - Dmg - insta
         // Mana Shield
-        public static readonly Spell Sheild = new Spell("Mana Shield", 2000, false, true, true,
+        public static readonly Spell Sheild = new Spell("Mana Shield", 2000, false, false, true,
             isWanted:
                 () =>
                     Helpers.CanCast("Mana Shield") && Me.IsInCombat &&
@@ -36,7 +36,7 @@ namespace CustomClassTemplate.Objects
 
         // Evocation
 
-        public static readonly Spell Evocation = new Spell("Evocation", 1900, false, true, true, isChanneled: true,
+        public static readonly Spell Evocation = new Spell("Evocation", 1900, false, false, false, isChanneled: true,
             isWanted:
                 () =>
                     Helpers.CanCast("Evocation") &&
@@ -44,7 +44,7 @@ namespace CustomClassTemplate.Objects
                 );
         //-------------------------------------------------------------------------------------------------------
         //Ice Block
-        public static readonly Spell IceBlock = new Spell("Ice Block", 1700, false, true, true,
+        public static readonly Spell IceBlock = new Spell("Ice Block", 1700, false, false, true,
             isWanted:
                 () =>
                     Helpers.CanCast("Ice Block") && Me.IsInCombat
@@ -57,10 +57,10 @@ namespace CustomClassTemplate.Objects
                 });
         //-------------------------------------------------------------------------------------------------------
         // Ice Barrier
-        public static readonly Spell Barrier = new Spell("Ice Barrier", 1600, false, true, true,
+        public static readonly Spell Barrier = new Spell("Ice Barrier", 1600, false, false, true,
     isWanted:
         () =>
-            Helpers.CanCast("Ice Barrier") && Me.GotAura("Ice Barrier") && Me.IsInCombat,
+            Helpers.CanCast("Ice Barrier") && !Me.GotAura("Ice Barrier"),
         customAction:
         () =>
         {
@@ -89,13 +89,14 @@ namespace CustomClassTemplate.Objects
             });
         //-------------------------------------------------------------------------------------------------------
         //Frost Nova                                            NAME      Prio - Buff - Dmg - insta
-        public static readonly Spell FrostNova = new Spell("Frost Nova", 700, false, true,
+        public static readonly Spell FrostNova = new Spell("Frost Nova", 700, false, true, true,
             isWanted:
                 () =>
                     Helpers.CanCast("Frost Nova") && Target.Position.GetDistanceTo(Me.Position) <= 5, customAction:
                 () =>
                 {
                     Helpers.TryCast("Frost Nova");
+                    Helpers.TryCast("Blink");
                 });
         //-------------------------------------------------------------------------------------------------------
         // Fire Blast                                            NAME    Prio , Buff , Dmg , insta
@@ -184,7 +185,7 @@ namespace CustomClassTemplate.Objects
                 });
 
                   //Cast Ice Armor only if we cant cast Ice Barrier -- Otherwise it will cast Mage Armor
-        public static readonly Spell IceArmor = new Spell("ice Armor", 1200, true, false,
+        public static readonly Spell IceArmor = new Spell("Ice Armor", 1200, true, false,
             isWanted:
                 () =>
                    !Helpers.CanCast("Ice Barrier") && !Me.GotAura("Ice Armor") &&

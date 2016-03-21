@@ -7,8 +7,8 @@
     <ProjectGuid>{E81E3542-8F35-4712-AB98-8ED32AB134E8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BokutoxFrostMageV2</RootNamespace>
-    <AssemblyName>BokutoxFrostMage V2</AssemblyName>
+    <RootNamespace>FrostMageV9001</RootNamespace>
+    <AssemblyName>FrostMage V9001</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
